@@ -9,8 +9,12 @@ def sentiment_analyzer(text_to_analyze):
     
     formated_resp = json.loads(response.text)
 
-    label = formated_resp['documentSentiment']['label']
-    score = formated_resp['documentSentiment']['score']
+    if response.status_code == 200:
+        label = formated_resp['documentSentiment']['label']
+        score = formated_resp['documentSentiment']['score']
+    elif response.status_code == 500:
+        label = None
+        score = None
     
     r = {'label': label, 'score': score}
     return r
